@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuelve a cargar la pagina para ver mas partidos</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- NO BLOQUEAR ADS -->
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #232323;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            margin: 0;
+            color: #f1c40f;
+        }
+        
+        .ad-container {
+            margin: 20px auto;
+            text-align: center;
+            overflow: hidden;
+            min-height: 100px;
+            background-color: rgba(255,255,255,0.05);
+            border: 1px dashed #444;
+            padding: 5px;
+        }
+        
+        .ad-banner {
+            width: 100%;
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+        }
+        
+        .partidos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .partido {
+            background-color: #232323;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+        
+        .partido:hover {
+            background-color: #333;
+        }
+        
+        .partido h3 {
+            margin-top: 0;
+            color: #f1c40f;
+        }
+        
+        .partido .tiempo {
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .partido video {
+            width: 100%;
+            display: none;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+        
+        footer {
+            background-color: #232323;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+            color: #888;
+        }
+        
+        .partido.active {
+            border: 2px solid #f1c40f;
+        }
+        
+        .ad-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background: rgba(0,0,0,0.9);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 80%;
+            display: none;
+        }
+        
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        iframe {
+            border: 0;
+        }
+        
+        /* Espacios para anuncios directos */
+        .ad-direct {
+            width: 100%;
+            margin: 20px auto;
+            min-height: 90px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Actualiza la pagina para que puedas disfrutar de los partidos</h1>
+        </header>
+        
+        <!-- Anuncio Superior (banner) -->
+        <div class="ad-container" id="ad-top">
+            <!-- ANUNCIO BANNER SUPERIOR -->
+            <div class="ad-banner">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key': 'b330ccd204185aee9ef640adccf896d2',
+                        'format': 'iframe',
+                        'height': 90,
+                        'width': 728,
+                        'params': {}
+                    };
+                    document.write('<scr' + 'ipt type="text/javascript" src="//www.highperformanceformat.com/b330ccd204185aee9ef640adccf896d2/invoke.js"></scr' + 'ipt>');
+                </script>
+            </div>
+        </div>
+        
+        <!-- Anuncio Directo -->
+        
+
+
+
+
+<div class="partido" onclick="cargarPartido(this, 'https://y2fzdgxl.fubohd.com/espn/mono.m3u8?token=e3a0622643a96dd100b784771f87f451d95006ea-b0-1742167354-1742131354')">
+    <h3>8:30am</h3>
+    <div class="tiempo">Premier League: Fulham vs Tottenham Hotspur</div>
+    <video controls></video>
+</div>
+
+<div class="partido" onclick="cargarPartido(this, 'https://c2f2zq.fubohd.com/espn1_nl/mono.m3u8?token=ed4f9eb4e8d63e3254b447b3aeaac6bd0add9a0e-0c-1742167216-1742131216')">
+    <h3>8:30am</h3>
+    <div class="tiempo">Eredivisie: Twente vs Feyenoord Rotterdam</div>
+    <video controls></video>
+</div>
+
+<div class="partido" onclick="cargarPartido(this, 'https://bgvnzw5k.fubohd.com/espnmx/mono.m3u8?token=aa55198f7c066383dae3544691bb84f7d791403d-c5-1742168450-1742132450')">
+    <h3>9:00am</h3>
+    <div class="tiempo">Serie A: Bologna vs Lazio Roma</div>
+    <video controls></video>
+</div>
+
+
+<div class="partido" onclick="cargarPartido(this, 'https://agl2zq.fubohd.com/disney9/mono.m3u8?token=15c89992472f8251698589818a9eefe995bb98c7-a5-1742170296-1742134296')">
+    <h3>9:30am</h3>
+    <div class="tiempo">Bundesliga: Bochum vs Eintracht Frankfurt</div>
+    <video controls></video>
+</div>
+
+
+<div class="partido" onclick="cargarPartido(this, 'https://bmv3.fubohd.com/foxdeportes/mono.m3u8?token=e3d2e58e9f4438aa32578fd773240091dc27669e-1c-1742171922-1742135922')">
+    <h3>10:00am</h3>
+    <div class="tiempo">Serie A: AS Roma vs Cagliari</div>
+    <video controls></video>
+</div>
+
+
+
+<div class="partido" onclick="cargarPartido(this, 'https://ag9wzq.fubohd.com/dsports/mono.m3u8?token=4a93f9a9bdb1d8cdbba30467a736600b7d124502-b3-1742172200-1742136200')">
+    <h3>10:15am</h3>
+    <div class="tiempo">LaLiga: Sevilla vs Athletic Club</div>
+    <video controls></video>
+</div>
+
+<div class="partido" onclick="cargarPartido(this, 'https://ym9yzq.fubohd.com/espnar/mono.m3u8?token=17fa07bae757962391cda1c0fed763679243f6e2-f2-1742177200-1742141200')">
+    <h3>11:30am</h3>
+    <div class="tiempo">EFL Cup: Liverpool vs Newcastle United | Final</div>
+    <video controls></video>
+</div>
+
+
+<div class="partido" onclick="cargarPartido(this, 'URL')">
+    <h3>12:00pm</h3>
+    <div class="tiempo">Ligue 1: Brest vs Metz</div>
+    <video controls></video>
+</div>
+
+
+<div class="partido" onclick="cargarPartido(this, 'URL')">
+    <h3>1:00pm</h3>
+    <div class="tiempo">LaLiga: Getafe vs Valencia</div>
+    <video controls></video>
+</div>
+
+<div class="partido" onclick="cargarPartido(this, 'URL')">
+    <h3>2:00pm</h3>
+    <div class="tiempo">Serie A: AC Milan vs Fiorentina</div>
+    <video controls></video>
+</div>
+
+<div class="partido" onclick="cargarPartido(this, 'URL')">
+    <h3>2:30pm</h3>
+    <div class="tiempo">Bundesliga: Bayern Munich vs Borussia Dortmund</div>
+    <video controls></video>
+</div>
+
+<div class="partido" onclick="cargarPartido(this, 'URL')">
+    <h3>3:00pm</h3>
+    <div class="tiempo">LaLiga: Atletico Madrid vs Barcelona</div>
+    <video controls></video>
+</div>
+
+<div class="partido" onclick="cargarPartido(this, 'URL')">
+    <h3>3:30pm</h3>
+    <div class="tiempo">Ligue 1: Paris Saint-Germain vs Marseille</div>
+    <video controls></video>
+</div>
+
+        
+
+        
+        </div>
+        
+        <!-- Anuncio Container Central -->
+        <div class="ad-container">
+            <script async="async" data-cfasync="false" src="//pl26063295.effectiveratecpm.com/2537ae2ea8b16bc9e554273a94dfd098/invoke.js"></script>
+            <div id="container-2537ae2ea8b16bc9e554273a94dfd098"></div>
+        </div>
+        
+        <!-- Anuncio Directo (adicional) -->
+        <div class="ad-container">
+            <iframe src="https://www.effectiveratecpm.com/wy4ysndt?key=12c98d265ef2e657283053a557f43edd" width="100%" height="250" frameborder="0" scrolling="no"></iframe>
+        </div>
+        
+        <!-- Anuncio Inferior -->
+        <div class="ad-container">
+            <script type='text/javascript' src='//pl26063307.effectiveratecpm.com/19/09/91/1909913ee893cee324321a2b56c090fa.js'></script>
+        </div>
+        
+        <footer>
+            &copy; 2025 Partidos en Vivo - Todos los derechos reservados
+        </footer>
+    </div>
+    
+    <script>
+        // Variable para mantener la instancia actual de HLS
+        let currentHls = null;
+        let lastActivePartido = null;
+        
+        // Aseguramos que los bloqueadores de anuncios no afecten
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarTodosLosAnuncios();
+            detectarBloqueadorAnuncios();
+        });
+        
+        function cargarTodosLosAnuncios() {
+            // Reintentar cargar los anuncios
+            setTimeout(function() {
+                // Primera carga de anuncios banner
+                var script1 = document.createElement('script');
+                script1.src = "//www.highperformanceformat.com/b330ccd204185aee9ef640adccf896d2/invoke.js";
+                document.getElementById('ad-top').appendChild(script1);
+                
+                // Cargar anuncio popunder
+                var script2 = document.createElement('script');
+                script2.src = "//pl26063313.effectiveratecpm.com/93/61/3d/93613d042ce505fe468e829efbb21520.js";
+                document.body.appendChild(script2);
+            }, 1000);
+        }
+        
+        function detectarBloqueadorAnuncios() {
+            // Comprobar si los anuncios están bloqueados
+            setTimeout(function() {
+                const adContainers = document.querySelectorAll('.ad-container');
+                let adsVisible = false;
+                
+                adContainers.forEach(container => {
+                    // Si el contenedor tiene contenido visible, hay anuncios
+                    if (container.offsetHeight > 10 && container.innerHTML.trim() !== '') {
+                        adsVisible = true;
+                    }
+                });
+                
+                if (!adsVisible) {
+                    console.log("Posible bloqueador de anuncios detectado");
+                    // Intentar cargar alternativas
+                    cargarAnunciosAlternativos();
+                }
+            }, 3000);
+        }
+        
+        function cargarAnunciosAlternativos() {
+            // Intenta con otra red de anuncios o método alternativo
+            const adContainers = document.querySelectorAll('.ad-container');
+            
+            adContainers.forEach(container => {
+                // Crear un iframe directo como alternativa
+                const iframe = document.createElement('iframe');
+                iframe.src = "https://www.effectiveratecpm.com/wy4ysndt?key=12c98d265ef2e657283053a557f43edd";
+                iframe.width = "100%";
+                iframe.height = "250";
+                iframe.frameBorder = "0";
+                container.appendChild(iframe);
+            });
+        }
+        
+        function cargarPartido(elemento, url) {
+            // Restablecer estilo del partido anterior
+            if (lastActivePartido) {
+                lastActivePartido.classList.remove('active');
+                const lastVideo = lastActivePartido.querySelector('video');
+                lastVideo.pause();
+                lastVideo.style.display = 'none';
+                
+                // Destruir la instancia anterior de HLS
+                if (currentHls) {
+                    currentHls.destroy();
+                    currentHls = null;
+                }
+            }
+            
+            // Activar el partido actual
+            elemento.classList.add('active');
+            lastActivePartido = elemento;
+            
+            // Obtener el elemento de video dentro del partido
+            const video = elemento.querySelector('video');
+            
+            // Intentar cargar popunders antes de reproducir el video
+            cargarPopunder();
+            
+            // Activar otros tipos de anuncios
+            activarAnunciosPorClick();
+            
+            // Reproducir el video
+            if (Hls.isSupported()) {
+                currentHls = new Hls();
+                currentHls.loadSource(url);
+                currentHls.attachMedia(video);
+                currentHls.on(Hls.Events.MANIFEST_PARSED, () => {
+                    video.style.display = 'block';
+                    video.play().catch(e => {
+                        console.log('Error al iniciar reproducción automática:', e);
+                    });
+                });
+                
+                currentHls.on(Hls.Events.ERROR, function(event, data) {
+                    if (data.fatal) {
+                        console.error('Error fatal de HLS:', data);
+                        alert('⚠️ **Si el partido no se ve, espera 5 minutos y actualiza la página.** A veces, la transmisión tarda en aparecer. ⏳⚽');
+                    }
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+                video.style.display = 'block';
+                video.addEventListener('loadedmetadata', () => {
+                    video.play().catch(e => console.log('Error al reproducir en Safari:', e));
+                });
+            } else {
+                alert('Tu navegador no soporta la reproducción de estos videos');
+            }
+            
+            // Desplazarse hasta el partido seleccionado
+            elemento.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+       function cargarPopunder() {
+    // Método 1: Cargar script de popunder
+    try {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '//pl26063307.effectiveratecpm.com/19/09/91/1909913ee893cee324321a2b56c090fa.js';
+        document.body.appendChild(script);
+    } catch (e) {
+        console.error("Error al cargar popunder:", e);
+    }
+    
+    // Método 2: Cargar iframe popunder
+    try {
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = 'https://www.effectiveratecpm.com/wy4ysndt?key=12c98d265ef2e657283053a557f43edd';
+        document.body.appendChild(iframe);
+    } catch (e) {
+        console.log("Error al cargar iframe popunder");
+    }
+}
+
+function activarAnunciosPorClick() {
+    // Activar todos los anuncios con un solo clic
+    document.querySelectorAll('.ad-container').forEach(container => {
+        // Forzar carga de anuncios
+        container.style.opacity = '0.99';
+        setTimeout(() => {
+            container.style.opacity = '1';
+        }, 100);
+    });
+    
+    // Intentar cargar scripts nuevamente
+    try {
+        // Cargar script container
+        var scriptContainer = document.createElement('script');
+        scriptContainer.async = true;
+        scriptContainer.setAttribute('data-cfasync', 'false');
+        scriptContainer.src = '//pl26063295.effectiveratecpm.com/2537ae2ea8b16bc9e554273a94dfd098/invoke.js';
+        document.body.appendChild(scriptContainer);
+        
+        // Cargar otro script de anuncios
+        var scriptAds = document.createElement('script');
+        scriptAds.type = 'text/javascript';
+        scriptAds.src = '//pl26063313.effectiveratecpm.com/93/61/3d/93613d042ce505fe468e829efbb21520.js';
+        document.body.appendChild(scriptAds);
+    } catch (e) {
+        console.error("Error al cargar scripts adicionales:", e);
+    }
+}
+
+// Inicializar la página
+window.addEventListener('load', function() {
+    cargarTodosLosAnuncios();
+    // Cargar anuncios después de 3 segundos para evitar bloqueos
+    setTimeout(activarAnunciosPorClick, 3000);
+});
+</script>
+</body>
+</html>
