@@ -32,6 +32,46 @@
             color: #f1c40f;
             font-size: 24px;
         }
+        .partido {
+            background-color: #2c3e50;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .partido:hover {
+            background-color: #34495e;
+        }
+        .partido video {
+            width: 100%;
+            max-height: 500px;
+            margin-top: 10px;
+        }
+        .live-indicator {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .refresh-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f1c40f;
+            border: none;
+            color: black;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .support-message {
+            text-align: center;
+            color: #bdc3c7;
+            margin-bottom: 10px;
+        }
         .ad-container {
             margin: 15px auto;
             text-align: center;
@@ -43,19 +83,13 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
         .ad-container iframe {
             max-width: 100%;
             max-height: 100%;
-        }
-        .ad-banner {
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         .ad-notice {
             font-size: 10px;
@@ -64,7 +98,12 @@
             font-style: italic;
             text-align: center;
         }
-        /* Rest of the existing styles remain the same */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #232323;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -116,47 +155,36 @@
         </div>
 
         <div class="partidos">
-            <div class="partido" onclick="cargarPartido(this, 'https://bgfuzq.fubohd.com/caracol/mono.m3u8?token=3ee198f65dba5df2a32f3dfb8ca181575c98b3f4-bd-1742979808-1742943808')">
+            <div class="partido" data-stream-url="https://bgfuzq.fubohd.com/caracol/mono.m3u8?token=3ee198f65dba5df2a32f3dfb8ca181575c98b3f4-bd-1742979808-1742943808">
                 <div class="live-indicator">EN VIVO</div>
                 <h3>18:30pm</h3>
                 <div class="tiempo">Clasificación para la Copa Mundial: Venezuela vs Peru</div>
-                <video controls></video>
             </div>
         </div>
 
-         <div class="partidos">
-            <div class="partido" onclick="cargarPartido(this, 'https://c3bvcnrz.pelotahd.com/americatv/mono.m3u8?token=fdf07d2ddfa831260a58686ea81758b6ca4309f7-20-1742979226-1742943226')">
+        <div class="partidos">
+            <div class="partido" data-stream-url="https://c3bvcnrz.pelotahd.com/americatv/mono.m3u8?token=fdf07d2ddfa831260a58686ea81758b6ca4309f7-20-1742979226-1742943226">
                 <div class="live-indicator">EN VIVO</div>
                 <h3>18:30pm</h3>
                 <div class="tiempo">Eliminatorias Sudamericanas 2026: Colombia vs Paraguay</div>
-                <video controls></video>
             </div>
         </div>
 
-
-          <div class="partidos">
-            <div class="partido" onclick="cargarPartido(this, 'https://z29vzc.pelotahd.com/movistar_eventos2/mono.m3u8?token=473f69394fa81e06c6f22f915c40c9a1552ed4b0-33-1742979775-1742943775')">
+        <div class="partidos">
+            <div class="partido" data-stream-url="https://z29vzc.pelotahd.com/movistar_eventos2/mono.m3u8?token=473f69394fa81e06c6f22f915c40c9a1552ed4b0-33-1742979775-1742943775">
                 <div class="live-indicator">EN VIVO</div>
                 <h3>18:30pm</h3>
                 <div class="tiempo">Eliminatorias Sudamericanas 2026: Chile vs Ecuador</div>
-                <video controls></video>
             </div>
         </div>
 
-
-
-         <div class="partidos">
-            <div class="partido" onclick="cargarPartido(this, 'https://bmf0aw9u.fubohd.com/tvpublica/mono.m3u8?token=8c16e11759c8a5babd51754e44dbafc4fb1689a6-69-1742979745-1742943745')">
+        <div class="partidos">
+            <div class="partido" data-stream-url="https://bmf0aw9u.fubohd.com/tvpublica/mono.m3u8?token=8c16e11759c8a5babd51754e44dbafc4fb1689a6-69-1742979745-1742943745">
                 <div class="live-indicator">EN VIVO</div>
                 <h3>18:30pm</h3>
                 <div class="tiempo">Eliminatorias Sudamericanas 2026: Argentina vs Brasil</div>
-                <video controls></video>
             </div>
         </div>
-
-
-
-        
         
         <button class="refresh-button" onclick="mostrarMasPartidos()">
             👉 VER MÁS PARTIDOS DISPONIBLES 👈
@@ -176,10 +204,125 @@
     </div>
     
     <script>
-        // Previous script remains mostly the same with some modifications
+        function initializeVideoPlayer(videoElement, streamUrl) {
+            // Check if HLS is supported
+            if (Hls.isSupported()) {
+                const hls = new Hls({
+                    // More robust HLS configuration
+                    maxBufferLength: 30,  // Seconds of video buffer
+                    maxMaxBufferLength: 60,  // Maximum buffer length
+                    maxBufferSize: 60 * 1000 * 1000,  // 60 MB buffer size
+                    enableWorker: true,  // Use web worker for parsing
+                    liveSyncDuration: 30,  // How far behind live point to sync
+                    liveMaxLatencyDuration: 60,  // Maximum latency before catching up
+                    liveDurationInfinity: true,  // Allow infinite live stream duration
+                    
+                    // Error handling configuration
+                    startPosition: -1,  // Auto start
+                    autoStartLoad: true,  // Automatically start loading
+                    debug: false  // Set to true for detailed logging
+                });
+
+                // Error handling for HLS
+                hls.on(Hls.Events.ERROR, function (event, data) {
+                    console.error('HLS Error:', data);
+                    
+                    // Attempt to recover from media errors
+                    if (data.fatal) {
+                        switch (data.type) {
+                            case Hls.ErrorTypes.NETWORK_ERROR:
+                                console.log('Fatal network error. Attempting to recover...');
+                                hls.startLoad();
+                                break;
+                            case Hls.ErrorTypes.MEDIA_ERROR:
+                                console.log('Fatal media error. Attempting to recover...');
+                                hls.recoverMediaError();
+                                break;
+                            default:
+                                hls.destroy();
+                                break;
+                        }
+                    }
+                });
+
+                // Load and attach stream
+                hls.loadSource(streamUrl);
+                hls.attachMedia(videoElement);
+
+                // Ready to play
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    videoElement.play().catch(e => {
+                        console.error('Autoplay prevented:', e);
+                        // Optional: Add user interaction hint
+                        videoElement.setAttribute('playsinline', '');
+                        videoElement.setAttribute('webkit-playsinline', '');
+                    });
+                });
+            } 
+            // Fallback for browsers with native HLS support
+            else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+                videoElement.src = streamUrl;
+                videoElement.addEventListener('loadedmetadata', function() {
+                    videoElement.play().catch(e => {
+                        console.error('Autoplay prevented:', e);
+                    });
+                });
+            } 
+            else {
+                console.error('HLS is not supported in this browser');
+                // Optional: Show user a browser compatibility message
+            }
+        }
+
+        function cargarPartido(partidoElement) {
+            const streamUrl = partidoElement.getAttribute('data-stream-url');
+            if (!streamUrl) {
+                console.error('No stream URL found');
+                return;
+            }
+
+            // Find or create video element
+            let videoElement = partidoElement.querySelector('video');
+            
+            if (!videoElement) {
+                videoElement = document.createElement('video');
+                videoElement.controls = true;
+                videoElement.style.width = '100%';
+                videoElement.style.maxHeight = '500px';
+                partidoElement.appendChild(videoElement);
+            }
+
+            // Remove any existing source elements
+            videoElement.innerHTML = '';
+
+            // Set video attributes for better mobile and responsive support
+            videoElement.setAttribute('playsinline', '');
+            videoElement.setAttribute('webkit-playsinline', '');
+            videoElement.setAttribute('x5-playsinline', '');
+            
+            // Attempt to initialize video player
+            initializeVideoPlayer(videoElement, streamUrl);
+        }
+
+        function mostrarMasPartidos() {
+            alert('Funcionalidad de mostrar más partidos próximamente');
+        }
+
+        // Add click event listeners to partido elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const partidoElements = document.querySelectorAll('.partido');
+            partidoElements.forEach(partido => {
+                partido.addEventListener('click', function() {
+                    cargarPartido(this);
+                });
+            });
+
+            // Ad loading and ad blocker detection
+            cargarTodosLosAnuncios();
+            detectarBloqueadorAnuncios();
+        });
 
         function cargarTodosLosAnuncios() {
-            // More aggressive ad loading strategy
             const adContainers = [
                 'ad-top', 
                 'ad-mid-1', 
@@ -190,16 +333,13 @@
             adContainers.forEach(containerId => {
                 const container = document.getElementById(containerId);
                 if (container) {
-                    // Ensure multiple ad loading methods
                     try {
-                        // Method 1: Direct script injection
                         const script = document.createElement('script');
                         script.type = 'text/javascript';
                         script.async = true;
                         script.src = '//pl26063295.effectiveratecpm.com/2537ae2ea8b16bc9e554273a94dfd098/invoke.js';
                         container.appendChild(script);
 
-                        // Method 2: Fallback ad loading
                         const adScript = document.createElement('script');
                         adScript.type = 'text/javascript';
                         adScript.src = '//www.highperformanceformat.com/b330ccd204185aee9ef640adccf896d2/invoke.js';
@@ -217,7 +357,6 @@
                 let adsVisible = false;
                 
                 adContainers.forEach(container => {
-                    // More lenient visibility check
                     if (container.querySelector('iframe') || 
                         container.querySelector('script') || 
                         container.innerHTML.includes('advertisement')) {
@@ -252,16 +391,8 @@
             );
         }
 
-        // Initialize ad loading on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            cargarTodosLosAnuncios();
-            detectarBloqueadorAnuncios();
-            
-            // Periodic ad refresh
-            setInterval(cargarTodosLosAnuncios, 30000);
-        });
-
-        // Rest of the previous script remains the same
+        // Periodic ad refresh
+        setInterval(cargarTodosLosAnuncios, 30000);
     </script>
 </body>
 </html>
